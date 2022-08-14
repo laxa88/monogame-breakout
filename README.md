@@ -5,6 +5,9 @@
 Ultimate guide to getting started with Monogame and VS Code:
 https://www.reddit.com/r/monogame/comments/cst49i/the_ultimate_guide_to_getting_started_with/
 
+Previous projects:
+- Pong: https://github.com/laxa88/monogame-pong
+
 ## To-dos
 
 - Block
