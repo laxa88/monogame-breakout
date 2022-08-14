@@ -46,7 +46,7 @@ namespace Breakout.Tests
 
             // Write some test code.
             // e.g. Assert.AreEqual(expectedValue, actualValue);
-            Assert.AreEqual(1, 1);
+            Assert.That(1, Is.EqualTo(1));
         }
     }
 }

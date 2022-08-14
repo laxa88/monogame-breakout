@@ -24,7 +24,7 @@ namespace Breakout.Tests
             Sprite sprite = new Sprite();
             obj.AddComponent(sprite);
 
-            Assert.AreEqual(1, obj.componentCount);
+            Assert.That(obj.componentCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace Breakout.Tests
             obj.AddComponent(sprite);
             obj.AddComponent(hitbox);
 
-            Assert.AreEqual(2, obj.componentCount);
+            Assert.That(obj.componentCount, Is.EqualTo(2));
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Breakout.Tests
             obj.AddComponent(sprite);
             obj.AddComponent(sprite);
 
-            Assert.AreEqual(1, obj.componentCount);
+            Assert.That(obj.componentCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace Breakout.Tests
             obj.AddComponent(sprite);
             obj.RemoveComponent<Sprite>();
 
-            Assert.AreEqual(0, obj.componentCount);
+            Assert.That(obj.componentCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Breakout.Tests
             obj.AddComponent(hitbox2);
             obj.RemoveComponent<Sprite>();
 
-            Assert.AreEqual(2, obj.componentCount);
+            Assert.That(obj.componentCount, Is.EqualTo(2));
         }
 
         [Test]
@@ -92,9 +92,9 @@ namespace Breakout.Tests
             obj.AddComponent(hitbox2);
             List<Sprite> sprites = obj.GetComponents<Sprite>();
 
-            Assert.AreEqual(2, sprites.Count);
-            Assert.AreSame(sprite1, sprites[0]);
-            Assert.AreSame(sprite2, sprites[1]);
+            Assert.That(sprites.Count, Is.EqualTo(2));
+            Assert.That(sprites[0], Is.SameAs(sprite1));
+            Assert.That(sprites[1], Is.SameAs(sprite2));
         }
     }
 }
