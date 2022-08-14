@@ -20,7 +20,7 @@ namespace Engine
 
         override public void Draw()
         {
-            Engine.spriteBatch.Draw(_texture, _drawRect, null, Color.White);
+            Core.spriteBatch.Draw(_texture, _drawRect, null, Color.White);
         }
     }
 }

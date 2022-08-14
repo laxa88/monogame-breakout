@@ -53,7 +53,7 @@ namespace Engine
         {
             if (_debugTexture == null)
             {
-                _debugTexture = new Texture2D(Engine.spriteBatch.GraphicsDevice, 1, 1);
+                _debugTexture = new Texture2D(Core.spriteBatch.GraphicsDevice, 1, 1);
                 _debugTexture.SetData<Color>(new Color[] { Color.Red });
             }
 
@@ -71,7 +71,7 @@ namespace Engine
                 || _debugRect.Height != rect.Height
             )
             {
-                Engine.spriteBatch.Draw(
+                Core.spriteBatch.Draw(
                     _debugTexture,
                     new Rectangle(
                         _debugRect.X,
@@ -81,7 +81,7 @@ namespace Engine
                     ),
                     _debugColor
                 );
-                Engine.spriteBatch.Draw(
+                Core.spriteBatch.Draw(
                     _debugTexture,
                     new Rectangle(
                         _debugRect.X,
@@ -91,7 +91,7 @@ namespace Engine
                     ),
                     _debugColor
                 );
-                Engine.spriteBatch.Draw(
+                Core.spriteBatch.Draw(
                     _debugTexture,
                     new Rectangle(
                         _debugRect.X + _debugRect.Width,
@@ -101,7 +101,7 @@ namespace Engine
                     ),
                     _debugColor
                 );
-                Engine.spriteBatch.Draw(
+                Core.spriteBatch.Draw(
                     _debugTexture,
                     new Rectangle(
                         _debugRect.X,
@@ -113,7 +113,7 @@ namespace Engine
                 );
             }
 
-            Engine.spriteBatch.Draw(_debugTexture, rect, null, Color.White);
+            Core.spriteBatch.Draw(_debugTexture, rect, null, Color.White);
         }
     }
 }
