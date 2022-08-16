@@ -21,7 +21,7 @@ namespace Breakout.Tests
         public void ShouldAddComponent()
         {
             GameObject obj = new GameObject(game);
-            Sprite sprite = new Sprite();
+            Sprite sprite = new Sprite(0, 0, 0, 0);
             obj.AddComponent(sprite);
 
             Assert.That(obj.componentCount, Is.EqualTo(1));
@@ -31,8 +31,8 @@ namespace Breakout.Tests
         public void ShouldAddComponents()
         {
             GameObject obj = new GameObject(game);
-            Sprite sprite = new Sprite();
-            Hitbox2D hitbox = new Hitbox2D();
+            Sprite sprite = new Sprite(0, 0, 0, 0);
+            Hitbox2D hitbox = new Hitbox2D(0, 0, 0, 0);
             obj.AddComponent(sprite);
             obj.AddComponent(hitbox);
 
@@ -43,7 +43,7 @@ namespace Breakout.Tests
         public void ShouldNotAddExistingComponent()
         {
             GameObject obj = new GameObject(game);
-            Sprite sprite = new Sprite();
+            Sprite sprite = new Sprite(0, 0, 0, 0);
             obj.AddComponent(sprite);
             obj.AddComponent(sprite);
 
@@ -54,7 +54,7 @@ namespace Breakout.Tests
         public void ShouldRemoveComponent()
         {
             GameObject obj = new GameObject(game);
-            Sprite sprite = new Sprite();
+            Sprite sprite = new Sprite(0, 0, 0, 0);
             obj.AddComponent(sprite);
             obj.RemoveComponent<Sprite>();
 
@@ -65,10 +65,10 @@ namespace Breakout.Tests
         public void ShouldRemoveComponentsByType()
         {
             GameObject obj = new GameObject(game);
-            Sprite sprite1 = new Sprite();
-            Sprite sprite2 = new Sprite();
-            Hitbox2D hitbox1 = new Hitbox2D();
-            Hitbox2D hitbox2 = new Hitbox2D();
+            Sprite sprite1 = new Sprite(0, 0, 0, 0);
+            Sprite sprite2 = new Sprite(0, 0, 0, 0);
+            Hitbox2D hitbox1 = new Hitbox2D(0, 0, 0, 0);
+            Hitbox2D hitbox2 = new Hitbox2D(0, 0, 0, 0);
             obj.AddComponent(sprite1);
             obj.AddComponent(sprite2);
             obj.AddComponent(hitbox1);
@@ -82,10 +82,10 @@ namespace Breakout.Tests
         public void ShouldGetComponentByType()
         {
             GameObject obj = new GameObject(game);
-            Sprite sprite1 = new Sprite();
-            Sprite sprite2 = new Sprite();
-            Hitbox2D hitbox1 = new Hitbox2D();
-            Hitbox2D hitbox2 = new Hitbox2D();
+            Sprite sprite1 = new Sprite(0, 0, 0, 0);
+            Sprite sprite2 = new Sprite(0, 0, 0, 0);
+            Hitbox2D hitbox1 = new Hitbox2D(0, 0, 0, 0);
+            Hitbox2D hitbox2 = new Hitbox2D(0, 0, 0, 0);
             obj.AddComponent(sprite1);
             obj.AddComponent(hitbox1);
             obj.AddComponent(sprite2);

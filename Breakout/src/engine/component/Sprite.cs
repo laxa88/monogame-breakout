@@ -8,6 +8,16 @@ namespace Engine
         protected Texture2D _texture;
         protected Rectangle _drawRect;
 
+        public Sprite(int x, int y, int w, int h)
+        {
+            SetSpriteRect(x, y, w, h);
+        }
+
+        public void SetSpriteRect(int x, int y, int w, int h)
+        {
+            _drawRect = new Rectangle(x, y, w, h);
+        }
+
         protected void SetTexture(Texture2D tex)
         {
             _texture = tex;

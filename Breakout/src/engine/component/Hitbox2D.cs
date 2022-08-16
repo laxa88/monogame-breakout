@@ -16,13 +16,13 @@ namespace Engine
             get { return _hitbox; }
         }
 
-        public Hitbox2D()
+        public Hitbox2D(int x, int y, int w, int h)
         {
             _debugRect = new Rectangle();
             _debugColor = Color.Red;
             _debugLineWidth = 1;
 
-            _hitbox = new Rectangle();
+            _hitbox = new Rectangle(x, y, w, h);
         }
 
         public void SetHitbox(int x, int y, int w, int h)

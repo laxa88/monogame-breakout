@@ -3,10 +3,8 @@ using Microsoft.Xna.Framework;
 
 namespace Engine
 {
-    public class GameObject : DrawableGameComponent
+    public class GameObject : GameComponent
     {
-        protected bool _active;
-
         protected Vector2 _position;
         public Vector2 position
         {
@@ -22,6 +20,16 @@ namespace Engine
         public GameObject(Game game) : base(game)
         {
             _components = new List<Component>();
+        }
+
+        public void AddGameObject(GameObject obj)
+        {
+            // TODO add to list, set their parent to this
+        }
+
+        public void RemoveGameObject(GameObject obj)
+        {
+            // TODO destroy object, remove its parent, remove from this list
         }
 
         public void AddComponent(Component component)
@@ -71,12 +79,12 @@ namespace Engine
 
         protected virtual void Activate()
         {
-            this._active = true;
+            Enabled = true;
         }
 
         protected virtual void Deactivate()
         {
-            this._active = false;
+            Enabled = false;
         }
     }
 }
