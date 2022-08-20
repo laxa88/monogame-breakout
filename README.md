@@ -23,7 +23,7 @@ Previous projects:
   - [ ] lose a life when all balls exits bottom of screen
 
 - Paddle
-  - [ ] left/right movement
+  - [x] left/right movement
 
 - Power-ups
   - [ ] reduce paddle size to 0.5
