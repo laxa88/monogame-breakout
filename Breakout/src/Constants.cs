@@ -15,5 +15,9 @@ namespace Breakout
         public const int BALL_SIZE = 10;
         public const int PADDLE_WIDTH = 80;
         public const int PADDLE_HEIGHT = 10;
+
+        public const int BLOCK_COLUMNS = 15;
+        public const int BLOCK_ROWS = 40;
+        public const int BLOCK_PADDING = 2;
     }
 }

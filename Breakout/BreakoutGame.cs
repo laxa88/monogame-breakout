@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json;
 
 namespace Breakout
 {
@@ -18,7 +22,7 @@ namespace Breakout
         // Game
 
         private Stage _stage;
-        private Block[] _blocks;
+        private List<Block> _blocks;
         private Paddle _paddle;
         private Ball _ball;
 
@@ -72,6 +76,25 @@ namespace Breakout
             _ball = new Ball(this, _spriteBatch);
             _ball.Initialize(_stage, _paddle, Constants.BALL_SIZE, Constants.BALL_SIZE);
             _ball.BallExitedBottom += OnPlayerLoseBall;
+
+            _blocks = new List<Block>();
+            using (StreamReader r = new StreamReader("Breakout/Content/stage_01.json"))
+            {
+                string json = r.ReadToEnd();
+                JsonConvert
+                    .DeserializeObject<List<int>>(json)
+                    .Select((x, i) => new { item = x, index = i })
+                    .ToList()
+                    .ForEach(obj =>
+                    {
+                        if (obj.item != 0)
+                        {
+                            Block block = new Block(this, _spriteBatch, obj.item, obj.index);
+                            block.Initialize();
+                            _blocks.Add(block);
+                        }
+                    });
+            }
 
             // Add callbacks
 
@@ -143,6 +166,12 @@ namespace Breakout
             _stage.Draw(gameTime);
             _paddle.Draw(gameTime);
             _ball.Draw(gameTime);
+            _blocks.ForEach(
+                (Block block) =>
+                {
+                    block.Draw(gameTime);
+                }
+            );
             _spriteBatch.End();
 
             // Target main window, reset background colour
