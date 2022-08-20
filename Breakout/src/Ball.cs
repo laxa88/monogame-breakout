@@ -5,6 +5,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Breakout
 {
+    public enum BallState
+    {
+        Init,
+        Active,
+    }
+
     public class Ball : GameObject
     {
         private Stage _stage;
@@ -16,6 +22,7 @@ namespace Breakout
         protected Rectangle _drawRect;
         private Vector2 _direction;
         private float _speed;
+        private BallState _state;
 
         public Rectangle hitbox
         {
@@ -55,29 +62,49 @@ namespace Breakout
 
         public override void Update(GameTime gameTime)
         {
-            if (_position.X < 0)
+            switch (_state)
             {
-                _direction.X = Math.Abs(_direction.X);
-            }
+                case BallState.Active:
+                    Vector2 velocity = new Vector2(
+                        _direction.X * _speed * gameTime.ElapsedGameTime.Milliseconds,
+                        _direction.Y * _speed * gameTime.ElapsedGameTime.Milliseconds
+                    );
+                    _position += velocity;
 
-            if (_position.X > _stage.width - hitbox.Width)
-            {
-                _direction.X = -Math.Abs(_direction.X);
-            }
+                    if (_position.X < 0)
+                    {
+                        _direction.X = Math.Abs(_direction.X);
+                    }
 
-            if (_position.Y < 0)
-            {
-                _direction.Y = Math.Abs(_direction.Y);
-            }
+                    if (_position.X > _stage.width - hitbox.Width)
+                    {
+                        _direction.X = -Math.Abs(_direction.X);
+                    }
 
-            if (_direction.Y > 0 && isCollide(this.hitbox, _paddle.hitbox))
-            {
-                _direction.Y = -Math.Abs(_direction.Y);
-            }
+                    if (_position.Y < 0)
+                    {
+                        _direction.Y = Math.Abs(_direction.Y);
+                    }
 
-            if (_position.Y > _stage.height + 40)
-            {
-                BallExitedBottom(this, EventArgs.Empty);
+                    if (_direction.Y > 0 && isCollide(this.hitbox, _paddle.hitbox))
+                    {
+                        _direction.Y = -Math.Abs(_direction.Y);
+                    }
+
+                    if (_position.Y > _stage.height + 40)
+                    {
+                        BallExitedBottom(this, EventArgs.Empty);
+                    }
+
+                    break;
+
+                case BallState.Init:
+                default:
+                    _position = new Vector2(
+                        _paddle.position.X + _paddle.width / 2 - hitbox.Width / 2,
+                        _paddle.position.Y - hitbox.Height
+                    );
+                    break;
             }
         }
 
@@ -101,11 +128,7 @@ namespace Breakout
         /// </summary>
         public void Reset()
         {
-            // Reset to paddle position
-            _position = new Vector2(
-                _paddle.position.X + _paddle.width / 2 - hitbox.Width / 2,
-                _paddle.position.Y - hitbox.Height
-            );
+            _state = BallState.Init;
 
             // angle fixed at north-east
             _direction = Vector2.Normalize(new Vector2(1, -1));
