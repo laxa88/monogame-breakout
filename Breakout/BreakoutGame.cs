@@ -3,7 +3,6 @@ using Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Pong;
 
 namespace Breakout
 {
@@ -64,11 +63,15 @@ namespace Breakout
             _paddle = new Paddle(this, _spriteBatch);
             _paddle.Initialize(
                 _stage,
-                _stage.width / 2,
+                _stage.width / 2 - Constants.PADDLE_WIDTH / 2,
                 _stage.height - 60,
                 Constants.PADDLE_WIDTH,
                 Constants.PADDLE_HEIGHT
             );
+
+            _ball = new Ball(this, _spriteBatch);
+            _ball.Initialize(_stage, _paddle, Constants.BALL_SIZE, Constants.BALL_SIZE);
+            _ball.BallExitedBottom += OnPlayerLoseBall;
 
             // Add callbacks
 
@@ -124,6 +127,7 @@ namespace Breakout
                 Exit();
 
             _paddle.Update(gameTime, kstate);
+            _ball.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -138,6 +142,7 @@ namespace Breakout
             _spriteBatch.Begin(SpriteSortMode.Immediate, null, SamplerState.PointClamp);
             _stage.Draw(gameTime);
             _paddle.Draw(gameTime);
+            _ball.Draw(gameTime);
             _spriteBatch.End();
 
             // Target main window, reset background colour
@@ -151,6 +156,13 @@ namespace Breakout
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        protected void OnPlayerLoseBall(object sender, EventArgs e)
+        {
+            // TODO
+            // - check remaining balls
+            // - if zero, lose a life
         }
     }
 }

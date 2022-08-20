@@ -1,4 +1,4 @@
-namespace Pong
+namespace Breakout
 {
     static class Constants
     {
@@ -7,6 +7,7 @@ namespace Pong
         public const int GAME_WIDTH = 600;
         public const int GAME_HEIGHT = 800;
 
+        public const string IMG_BALL = "ball";
         public const string SFX_BOUNCE = "bounce";
         public const string SFX_ROUND_END = "round-end";
         public const string BGM = "bgm";

@@ -18,6 +18,7 @@ Previous projects:
   - [ ] tilemap system to allow custom levels
 
 - Ball
+  - [ ] Stick to paddle before launch
   - [ ] movement
   - [ ] bounce off paddle, walls and blocks
   - [ ] lose a life when all balls exits bottom of screen
