@@ -38,6 +38,17 @@ namespace Breakout
             }
         }
 
+        public Vector2 center
+        {
+            get
+            {
+                return new Vector2(
+                    _position.X + _drawRect.Width / 2,
+                    _position.Y + _drawRect.Height / 2
+                );
+            }
+        }
+
         public event EventHandler BallExitedBottom;
 
         public Ball(Game game, SpriteBatch spriteBatch) : base(game, spriteBatch) { }
@@ -90,6 +101,7 @@ namespace Breakout
                     if (_direction.Y > 0 && isCollide(this.hitbox, _paddle.hitbox))
                     {
                         _direction.Y = -Math.Abs(_direction.Y);
+                        SetNewDirection();
                     }
 
                     if (_position.Y > _stage.height + 40)
@@ -127,6 +139,15 @@ namespace Breakout
                 && r1.Y < r2.Y + r2.Height
                 && r1.Y + r1.Height > r2.Y
             );
+        }
+
+        /// <summary>
+        /// Sets new ball trajectory based on paddle collision point
+        /// </summary>
+        private void SetNewDirection()
+        {
+            Vector2 vec = Vector2.Normalize(this.center - _paddle.center);
+            _direction = Vector2.Normalize(new Vector2(vec.X, _direction.Y));
         }
 
         /// <summary>
