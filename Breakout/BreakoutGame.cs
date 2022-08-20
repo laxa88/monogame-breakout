@@ -127,7 +127,7 @@ namespace Breakout
                 Exit();
 
             _paddle.Update(gameTime, kstate);
-            _ball.Update(gameTime);
+            _ball.Update(gameTime, kstate);
 
             base.Update(gameTime);
         }
@@ -163,6 +163,7 @@ namespace Breakout
             // TODO
             // - check remaining balls
             // - if zero, lose a life
+            _ball.Reset();
         }
     }
 }

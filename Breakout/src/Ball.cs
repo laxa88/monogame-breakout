@@ -2,6 +2,7 @@ using System;
 using Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Breakout
 {
@@ -60,7 +61,7 @@ namespace Breakout
             Sound.LoadSoundEffect(Constants.SFX_BOUNCE);
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, KeyboardState kstate)
         {
             switch (_state)
             {
@@ -104,6 +105,11 @@ namespace Breakout
                         _paddle.position.X + _paddle.width / 2 - hitbox.Width / 2,
                         _paddle.position.Y - hitbox.Height
                     );
+
+                    if (kstate.IsKeyDown(Keys.Space))
+                    {
+                        _state = BallState.Active;
+                    }
                     break;
             }
         }
@@ -134,9 +140,6 @@ namespace Breakout
             _direction = Vector2.Normalize(new Vector2(1, -1));
 
             _speed = _initialSpeed;
-
-            // TODO
-            // reset state (stick to paddle)
         }
     }
 }
