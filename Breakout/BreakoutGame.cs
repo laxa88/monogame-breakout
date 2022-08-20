@@ -8,10 +8,19 @@ namespace Breakout
 {
     public class BreakoutGame : Game
     {
+        // Engine
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private RenderTarget2D _renderBuffer;
         private Rectangle _renderRectangle;
+
+        // Game
+
+        private Stage _stage;
+        private Block[] _blocks;
+        private Paddle _paddle;
+        private Ball _ball;
 
         public BreakoutGame()
         {
@@ -50,6 +59,15 @@ namespace Breakout
             OnWindowSizeChange(null, null);
 
             // TODO: start game
+        }
+
+        private void InitializeStage()
+        {
+            // TODO
+            // initialize stage
+            // initialize blocks
+            // initialize paddle
+            // initialize ball
         }
 
         private void OnWindowSizeChange(object sender, EventArgs e)
