@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Engine;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using NUnit.Framework;
 
 namespace Breakout.Tests
@@ -20,7 +21,7 @@ namespace Breakout.Tests
         [Test]
         public void ShouldAddComponent()
         {
-            GameObject obj = new GameObject(game);
+            GameObject obj = new GameObject(game, null);
             Sprite sprite = new Sprite(0, 0, 0, 0);
             obj.AddComponent(sprite);
 
@@ -30,7 +31,7 @@ namespace Breakout.Tests
         [Test]
         public void ShouldAddComponents()
         {
-            GameObject obj = new GameObject(game);
+            GameObject obj = new GameObject(game, null);
             Sprite sprite = new Sprite(0, 0, 0, 0);
             Hitbox2D hitbox = new Hitbox2D(0, 0, 0, 0);
             obj.AddComponent(sprite);
@@ -42,7 +43,7 @@ namespace Breakout.Tests
         [Test]
         public void ShouldNotAddExistingComponent()
         {
-            GameObject obj = new GameObject(game);
+            GameObject obj = new GameObject(game, null);
             Sprite sprite = new Sprite(0, 0, 0, 0);
             obj.AddComponent(sprite);
             obj.AddComponent(sprite);
@@ -53,7 +54,7 @@ namespace Breakout.Tests
         [Test]
         public void ShouldRemoveComponent()
         {
-            GameObject obj = new GameObject(game);
+            GameObject obj = new GameObject(game, null);
             Sprite sprite = new Sprite(0, 0, 0, 0);
             obj.AddComponent(sprite);
             obj.RemoveComponent<Sprite>();
@@ -64,7 +65,7 @@ namespace Breakout.Tests
         [Test]
         public void ShouldRemoveComponentsByType()
         {
-            GameObject obj = new GameObject(game);
+            GameObject obj = new GameObject(game, null);
             Sprite sprite1 = new Sprite(0, 0, 0, 0);
             Sprite sprite2 = new Sprite(0, 0, 0, 0);
             Hitbox2D hitbox1 = new Hitbox2D(0, 0, 0, 0);
@@ -81,7 +82,7 @@ namespace Breakout.Tests
         [Test]
         public void ShouldGetComponentByType()
         {
-            GameObject obj = new GameObject(game);
+            GameObject obj = new GameObject(game, null);
             Sprite sprite1 = new Sprite(0, 0, 0, 0);
             Sprite sprite2 = new Sprite(0, 0, 0, 0);
             Hitbox2D hitbox1 = new Hitbox2D(0, 0, 0, 0);

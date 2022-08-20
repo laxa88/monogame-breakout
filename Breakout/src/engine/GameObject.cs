@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine
 {
-    public class GameObject : GameComponent
+    public class GameObject : DrawableGameComponent
     {
+        protected SpriteBatch _spriteBatch;
         protected Vector2 _position;
         public Vector2 position
         {
@@ -17,9 +19,10 @@ namespace Engine
             get { return _components.Count; }
         }
 
-        public GameObject(Game game) : base(game)
+        public GameObject(Game game, SpriteBatch spriteBatch) : base(game)
         {
             _components = new List<Component>();
+            _spriteBatch = spriteBatch;
         }
 
         public void AddGameObject(GameObject obj)

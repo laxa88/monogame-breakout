@@ -1,32 +1,47 @@
+using Engine;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Breakout
 {
-    public class Stage : DrawableGameComponent
+    public class Stage : GameObject
     {
-        public Stage(Game game) : base(game)
+        private RenderTarget2D _renderTarget;
+        private Texture2D _texture;
+
+        public int width
         {
-            //
+            get { return _renderTarget.Width; }
         }
 
-        protected override void LoadContent()
+        public int height
         {
-            base.LoadContent();
+            get { return _renderTarget.Height; }
+        }
+
+        public Stage(Game game, SpriteBatch spriteBatch, int width, int height)
+            : base(game, spriteBatch)
+        {
+            _renderTarget = new RenderTarget2D(GraphicsDevice, width, height);
         }
 
         public override void Initialize()
         {
-            base.Initialize();
-        }
+            _texture = new Texture2D(GraphicsDevice, 1, 1);
+            var data = new Color[1];
+            data[0] = Color.White;
+            _texture.SetData(data);
 
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
+            // TODO: draw stage background?
         }
 
         public override void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
+            _spriteBatch.Draw(
+                _renderTarget,
+                new Rectangle(0, 0, _renderTarget.Width, _renderTarget.Height),
+                Color.White
+            );
         }
     }
 }

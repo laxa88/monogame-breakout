@@ -3,6 +3,7 @@ using Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pong;
 
 namespace Breakout
 {
@@ -45,13 +46,29 @@ namespace Breakout
             // Music.LoadMusic(Constants.BGM);
             // Music.PlayMusic(Constants.BGM, true);
 
-            _graphics.PreferredBackBufferWidth = 600;
-            _graphics.PreferredBackBufferHeight = 800;
+            _graphics.PreferredBackBufferWidth = Constants.WINDOW_WIDTH;
+            _graphics.PreferredBackBufferHeight = Constants.WINDOW_HEIGHT;
             _graphics.IsFullScreen = false;
             _graphics.ApplyChanges();
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _renderBuffer = new RenderTarget2D(GraphicsDevice, 600, 800);
+            _renderBuffer = new RenderTarget2D(
+                GraphicsDevice,
+                Constants.GAME_WIDTH,
+                Constants.GAME_HEIGHT
+            );
+
+            _stage = new Stage(this, _spriteBatch, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+            _stage.Initialize();
+
+            _paddle = new Paddle(this, _spriteBatch);
+            _paddle.Initialize(
+                _stage,
+                _stage.width / 2,
+                _stage.height - 60,
+                Constants.PADDLE_WIDTH,
+                Constants.PADDLE_HEIGHT
+            );
 
             // Add callbacks
 
@@ -98,13 +115,15 @@ namespace Breakout
 
         protected override void Update(GameTime gameTime)
         {
+            var kstate = Keyboard.GetState();
+
             if (
                 GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed
-                || Keyboard.GetState().IsKeyDown(Keys.Escape)
+                || kstate.IsKeyDown(Keys.Escape)
             )
                 Exit();
 
-            // TODO: Add your update logic here
+            _paddle.Update(gameTime, kstate);
 
             base.Update(gameTime);
         }
@@ -117,7 +136,8 @@ namespace Breakout
 
             // Draw everything game-related on this buffer screen.
             _spriteBatch.Begin(SpriteSortMode.Immediate, null, SamplerState.PointClamp);
-            // TODO: draw GameObjects here
+            _stage.Draw(gameTime);
+            _paddle.Draw(gameTime);
             _spriteBatch.End();
 
             // Target main window, reset background colour
