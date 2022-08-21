@@ -152,6 +152,9 @@ namespace Breakout
             _paddle.Update(gameTime, kstate);
             _ball.Update(gameTime, kstate);
 
+            // TODO check win condition (when blocks list is empty)
+            // TODO check lose condition (when lives is zero)
+
             base.Update(gameTime);
         }
 

@@ -113,43 +113,43 @@ namespace Breakout
                         SetNewDirection();
                     }
 
-                    _blocks.ForEach(
-                        (Block block) =>
+                    for (int i = _blocks.Count - 1; i >= 0; i--)
+                    {
+                        Block block = _blocks[i];
+
+                        Rectangle? possibleIntersection = Collision.Intersects(
+                            this.hitbox,
+                            block.hitbox
+                        );
+
+                        if (possibleIntersection == null)
                         {
-                            if (!block.Enabled)
-                            {
-                                return;
-                            }
-
-                            Rectangle? possibleIntersection = Collision.Intersects(
-                                this.hitbox,
-                                block.hitbox
-                            );
-
-                            if (possibleIntersection == null)
-                            {
-                                return;
-                            }
-
-                            Sound.PlaySfx(Constants.SFX_BOUNCE);
-                            block.Hurt();
-
-                            Rectangle intersection = possibleIntersection ?? Rectangle.Empty;
-
-                            Vector2 to = block.center - this.center;
-                            Vector2 to_signum = new Vector2(Math.Sign(to.X), Math.Sign(to.Y));
-                            if (intersection.Height < intersection.Width)
-                            {
-                                _position.Y -= to_signum.Y * intersection.Height;
-                                _direction.Y = -to_signum.Y * Math.Abs(_direction.Y);
-                            }
-                            else
-                            {
-                                _position.X -= to_signum.X * intersection.Width;
-                                _direction.X = -to_signum.X * Math.Abs(_direction.X);
-                            }
+                            continue;
                         }
-                    );
+
+                        Rectangle intersection = possibleIntersection ?? Rectangle.Empty;
+
+                        Vector2 to = block.center - this.center;
+                        Vector2 to_signum = new Vector2(Math.Sign(to.X), Math.Sign(to.Y));
+                        if (intersection.Height < intersection.Width)
+                        {
+                            _position.Y -= to_signum.Y * intersection.Height;
+                            _direction.Y = -to_signum.Y * Math.Abs(_direction.Y);
+                        }
+                        else
+                        {
+                            _position.X -= to_signum.X * intersection.Width;
+                            _direction.X = -to_signum.X * Math.Abs(_direction.X);
+                        }
+
+                        Sound.PlaySfx(Constants.SFX_BOUNCE);
+                        block.Hurt();
+
+                        if (!block.Enabled)
+                        {
+                            _blocks.RemoveAt(i);
+                        }
+                    }
 
                     if (_position.Y > _stage.height + 40)
                     {

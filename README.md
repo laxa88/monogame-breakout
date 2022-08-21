@@ -11,11 +11,11 @@ Previous projects:
 ## To-dos
 
 - Block
-  - [ ] lose a life on getting hit by ball
-  - [ ] change sprite or color depending on life
+  - [x] lose a life on getting hit by ball
+  - [x] change sprite or color depending on life
   - [ ] invulnerable types
-  - [ ] destroy on life reaching zero
-  - [ ] tilemap system to allow custom levels
+  - [x] destroy on life reaching zero
+  - [x] tilemap system to allow custom levels
 
 - Ball
   - [x] Stick to paddle before launch
