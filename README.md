@@ -34,9 +34,13 @@ Previous projects:
   - [ ] add ball
 
 - UI
-  - [ ] score, hi-score
+  - [ ] main menu (play, reset hi-score)
+  - [ ] pause menu (resume game, quit)
+  - [x] score, hi-score
   - [ ] life
   - [ ] current stage
+  - [ ] save hi-score and reload on game startup
+  - [ ] reset hi-score
 
 ## Compilation
 

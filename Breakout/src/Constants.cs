@@ -7,6 +7,7 @@ namespace Breakout
         public const int GAME_WIDTH = 600;
         public const int GAME_HEIGHT = 800;
 
+        public const string FNT_SCORE = "score";
         public const string IMG_BALL = "ball";
         public const string SFX_BOUNCE = "bounce";
         public const string SFX_EXPLOSION = "explosion";

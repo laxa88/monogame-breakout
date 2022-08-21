@@ -25,6 +25,7 @@ namespace Breakout
         private List<Block> _blocks;
         private Paddle _paddle;
         private Ball _ball;
+        private Score _score;
 
         public BreakoutGame()
         {
@@ -95,6 +96,9 @@ namespace Breakout
             _ball = new Ball(this, _spriteBatch);
             _ball.Initialize(_stage, _paddle, _blocks, Constants.BALL_SIZE, Constants.BALL_SIZE);
             _ball.BallExitedBottom += OnPlayerLoseBall;
+
+            _score = new Score(this, _spriteBatch);
+            _score.Initialize();
 
             // Add callbacks
 
@@ -168,13 +172,14 @@ namespace Breakout
             _spriteBatch.Begin(SpriteSortMode.Immediate, null, SamplerState.PointClamp);
             _stage.Draw(gameTime);
             _paddle.Draw(gameTime);
-            _ball.Draw(gameTime);
             _blocks.ForEach(
                 (Block block) =>
                 {
                     block.Draw(gameTime);
                 }
             );
+            _ball.Draw(gameTime);
+            _score.Draw(gameTime);
             _spriteBatch.End();
 
             // Target main window, reset background colour

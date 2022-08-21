@@ -37,3 +37,10 @@
 /processorParam:Quality=Best
 /build:explosion.wav
 
+#begin score.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:score.spritefont
+
