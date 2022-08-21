@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,6 +18,7 @@ namespace Breakout
     {
         private Stage _stage;
         private Paddle _paddle;
+        private List<Block> _blocks;
 
         private float _initialSpeed;
 
@@ -53,10 +56,11 @@ namespace Breakout
 
         public Ball(Game game, SpriteBatch spriteBatch) : base(game, spriteBatch) { }
 
-        public void Initialize(Stage stage, Paddle paddle, int w, int h)
+        public void Initialize(Stage stage, Paddle paddle, List<Block> blocks, int w, int h)
         {
             _stage = stage;
             _paddle = paddle;
+            _blocks = blocks;
 
             _drawRect = new Rectangle(0, 0, w, h);
             _initialSpeed = 0.4f;
@@ -102,12 +106,50 @@ namespace Breakout
                         _direction.Y = Math.Abs(_direction.Y);
                     }
 
-                    if (_direction.Y > 0 && isCollide(this.hitbox, _paddle.hitbox))
+                    if (_direction.Y > 0 && this.hitbox.Intersects(_paddle.hitbox))
                     {
                         Sound.PlaySfx(Constants.SFX_BOUNCE);
                         _direction.Y = -Math.Abs(_direction.Y);
                         SetNewDirection();
                     }
+
+                    _blocks.ForEach(
+                        (Block block) =>
+                        {
+                            if (!block.Enabled)
+                            {
+                                return;
+                            }
+
+                            Rectangle? possibleIntersection = Collision.Intersects(
+                                this.hitbox,
+                                block.hitbox
+                            );
+
+                            if (possibleIntersection == null)
+                            {
+                                return;
+                            }
+
+                            Sound.PlaySfx(Constants.SFX_BOUNCE);
+                            block.Hurt();
+
+                            Rectangle intersection = possibleIntersection ?? Rectangle.Empty;
+
+                            Vector2 to = block.center - this.center;
+                            Vector2 to_signum = new Vector2(Math.Sign(to.X), Math.Sign(to.Y));
+                            if (intersection.Height < intersection.Width)
+                            {
+                                _position.Y -= to_signum.Y * intersection.Height;
+                                _direction.Y = -to_signum.Y * Math.Abs(_direction.Y);
+                            }
+                            else
+                            {
+                                _position.X -= to_signum.X * intersection.Width;
+                                _direction.X = -to_signum.X * Math.Abs(_direction.X);
+                            }
+                        }
+                    );
 
                     if (_position.Y > _stage.height + 40)
                     {
@@ -135,16 +177,6 @@ namespace Breakout
         public override void Draw(GameTime gameTime)
         {
             _spriteBatch.Draw(_texture, this.hitbox, null, Color.White);
-        }
-
-        private bool isCollide(Rectangle r1, Rectangle r2)
-        {
-            return (
-                r1.X < r2.X + r2.Width
-                && r1.X + r1.Width > r2.X
-                && r1.Y < r2.Y + r2.Height
-                && r1.Y + r1.Height > r2.Y
-            );
         }
 
         /// <summary>

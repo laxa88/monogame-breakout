@@ -73,10 +73,6 @@ namespace Breakout
                 Constants.PADDLE_HEIGHT
             );
 
-            _ball = new Ball(this, _spriteBatch);
-            _ball.Initialize(_stage, _paddle, Constants.BALL_SIZE, Constants.BALL_SIZE);
-            _ball.BallExitedBottom += OnPlayerLoseBall;
-
             _blocks = new List<Block>();
             using (StreamReader r = new StreamReader("Breakout/Content/stage_01.json"))
             {
@@ -95,6 +91,10 @@ namespace Breakout
                         }
                     });
             }
+
+            _ball = new Ball(this, _spriteBatch);
+            _ball.Initialize(_stage, _paddle, _blocks, Constants.BALL_SIZE, Constants.BALL_SIZE);
+            _ball.BallExitedBottom += OnPlayerLoseBall;
 
             // Add callbacks
 

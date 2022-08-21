@@ -33,6 +33,17 @@ namespace Breakout
             }
         }
 
+        public Vector2 center
+        {
+            get
+            {
+                return new Vector2(
+                    _position.X + _drawRect.Width / 2,
+                    _position.Y + _drawRect.Height / 2
+                );
+            }
+        }
+
         private BlockType GetBlockType(int blockType)
         {
             switch (blockType)
