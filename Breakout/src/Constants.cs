@@ -9,6 +9,7 @@ namespace Breakout
 
         public const string IMG_BALL = "ball";
         public const string SFX_BOUNCE = "bounce";
+        public const string SFX_EXPLOSION = "explosion";
         public const string SFX_ROUND_END = "round-end";
         public const string BGM = "bgm";
 

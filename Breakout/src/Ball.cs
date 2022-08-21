@@ -70,6 +70,7 @@ namespace Breakout
         {
             _texture = this.Game.Content.Load<Texture2D>(Constants.IMG_BALL);
             Sound.LoadSoundEffect(Constants.SFX_BOUNCE);
+            Sound.LoadSoundEffect(Constants.SFX_EXPLOSION);
         }
 
         public void Update(GameTime gameTime, KeyboardState kstate)
@@ -85,27 +86,32 @@ namespace Breakout
 
                     if (_position.X < 0)
                     {
+                        Sound.PlaySfx(Constants.SFX_BOUNCE);
                         _direction.X = Math.Abs(_direction.X);
                     }
 
                     if (_position.X > _stage.width - hitbox.Width)
                     {
+                        Sound.PlaySfx(Constants.SFX_BOUNCE);
                         _direction.X = -Math.Abs(_direction.X);
                     }
 
                     if (_position.Y < 0)
                     {
+                        Sound.PlaySfx(Constants.SFX_BOUNCE);
                         _direction.Y = Math.Abs(_direction.Y);
                     }
 
                     if (_direction.Y > 0 && isCollide(this.hitbox, _paddle.hitbox))
                     {
+                        Sound.PlaySfx(Constants.SFX_BOUNCE);
                         _direction.Y = -Math.Abs(_direction.Y);
                         SetNewDirection();
                     }
 
                     if (_position.Y > _stage.height + 40)
                     {
+                        Sound.PlaySfx(Constants.SFX_EXPLOSION);
                         BallExitedBottom(this, EventArgs.Empty);
                     }
 
