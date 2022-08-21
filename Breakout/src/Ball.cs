@@ -19,6 +19,7 @@ namespace Breakout
         private Stage _stage;
         private Paddle _paddle;
         private List<Block> _blocks;
+        private Score _score;
 
         private float _initialSpeed;
 
@@ -56,11 +57,19 @@ namespace Breakout
 
         public Ball(Game game, SpriteBatch spriteBatch) : base(game, spriteBatch) { }
 
-        public void Initialize(Stage stage, Paddle paddle, List<Block> blocks, int w, int h)
+        public void Initialize(
+            Stage stage,
+            Paddle paddle,
+            List<Block> blocks,
+            Score score,
+            int w,
+            int h
+        )
         {
             _stage = stage;
             _paddle = paddle;
             _blocks = blocks;
+            _score = score;
 
             _drawRect = new Rectangle(0, 0, w, h);
             _initialSpeed = 0.4f;
@@ -143,7 +152,8 @@ namespace Breakout
                         }
 
                         Sound.PlaySfx(Constants.SFX_BOUNCE);
-                        block.Hurt();
+                        int points = block.Hurt();
+                        _score.AddScore(points);
 
                         if (!block.Enabled)
                         {

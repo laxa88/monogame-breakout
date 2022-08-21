@@ -16,8 +16,8 @@ namespace Breakout
         {
             base.Initialize();
 
-            _score = 0;
-            _hiscore = 0;
+            ResetScore();
+            ResetHiscore();
 
             LoadContent();
         }
@@ -43,6 +43,26 @@ namespace Breakout
                 new Vector2(Constants.GAME_WIDTH - 10 - rect.X, 10),
                 Color.White
             );
+        }
+
+        public void AddScore(int score)
+        {
+            _score += score;
+
+            if (_score > _hiscore)
+            {
+                _hiscore = _score;
+            }
+        }
+
+        public void ResetScore()
+        {
+            _score = 0;
+        }
+
+        public void ResetHiscore()
+        {
+            _hiscore = 0;
         }
     }
 }

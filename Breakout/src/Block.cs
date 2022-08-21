@@ -19,6 +19,7 @@ namespace Breakout
         int _positionIndex;
         BlockType _blockType;
         int _health;
+        int _points;
 
         public Rectangle hitbox
         {
@@ -58,6 +59,20 @@ namespace Breakout
             }
         }
 
+        private int GetPointsFromBlockType(int blockType)
+        {
+            switch (blockType)
+            {
+                case 3:
+                    return 30;
+                case 2:
+                    return 20;
+                case 1:
+                default:
+                    return 10;
+            }
+        }
+
         private Color GetColorByHealth()
         {
             switch (_health)
@@ -76,6 +91,7 @@ namespace Breakout
             : base(game, spriteBatch)
         {
             _blockType = GetBlockType(blockType);
+            _points = GetPointsFromBlockType(blockType);
             _positionIndex = positionIndex;
         }
 
@@ -122,14 +138,22 @@ namespace Breakout
             }
         }
 
-        public void Hurt()
+        /// <summary>
+        /// Reduce block's hitpoint, and returns the score points as result
+        /// </summary>
+        public int Hurt()
         {
             _health -= 1;
 
             if (_health <= 0)
             {
                 Deactivate();
+
+                // Bonus for destroying block
+                return _points * 10;
             }
+
+            return _points;
         }
     }
 }

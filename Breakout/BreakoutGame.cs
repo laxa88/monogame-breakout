@@ -62,6 +62,9 @@ namespace Breakout
                 Constants.GAME_HEIGHT
             );
 
+            _score = new Score(this, _spriteBatch);
+            _score.Initialize();
+
             _stage = new Stage(this, _spriteBatch, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
             _stage.Initialize();
 
@@ -94,11 +97,15 @@ namespace Breakout
             }
 
             _ball = new Ball(this, _spriteBatch);
-            _ball.Initialize(_stage, _paddle, _blocks, Constants.BALL_SIZE, Constants.BALL_SIZE);
+            _ball.Initialize(
+                _stage,
+                _paddle,
+                _blocks,
+                _score,
+                Constants.BALL_SIZE,
+                Constants.BALL_SIZE
+            );
             _ball.BallExitedBottom += OnPlayerLoseBall;
-
-            _score = new Score(this, _spriteBatch);
-            _score.Initialize();
 
             // Add callbacks
 
