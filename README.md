@@ -13,7 +13,7 @@ Previous projects:
 - Block
   - [x] lose a life on getting hit by ball
   - [x] change sprite or color depending on life
-  - [ ] invulnerable types
+  - [ ] ~invulnerable types~
   - [x] destroy on life reaching zero
   - [x] tilemap system to allow custom levels
 
@@ -26,7 +26,7 @@ Previous projects:
 - Paddle
   - [x] left/right movement
 
-- Power-ups
+- ~Power-ups~
   - [ ] reduce paddle size to 0.5
   - [ ] increase paddle size to 1.5
   - [ ] slow paddle speed to 0.25
@@ -34,13 +34,14 @@ Previous projects:
   - [ ] add ball
 
 - UI
-  - [ ] main menu (play, reset hi-score)
-  - [ ] pause menu (resume game, quit)
+  - [ ] ~main menu (play, reset hi-score)~
+  - [ ] ~pause menu (resume game, quit)~
   - [x] score, hi-score
   - [x] life
-  - [ ] current stage
-  - [ ] save hi-score and reload on game startup
-  - [ ] reset hi-score
+  - [ ] ~current stage~
+  - [ ] ~save hi-score and reload on game startup~
+  - [ ] ~reset hi-score~
+  - [ ] game over / restart game
 
 ## Compilation
 
