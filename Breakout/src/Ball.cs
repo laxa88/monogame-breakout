@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,6 +9,7 @@ namespace Breakout
 {
     public enum BallState
     {
+        Disabled,
         Init,
         Active,
     }
@@ -170,7 +170,6 @@ namespace Breakout
                     break;
 
                 case BallState.Init:
-                default:
                     _position = new Vector2(
                         _paddle.position.X + _paddle.width / 2 - hitbox.Width / 2,
                         _paddle.position.Y - hitbox.Height
@@ -180,6 +179,10 @@ namespace Breakout
                     {
                         _state = BallState.Active;
                     }
+                    break;
+
+                case BallState.Disabled:
+                default:
                     break;
             }
         }
@@ -209,6 +212,11 @@ namespace Breakout
             _direction = Vector2.Normalize(new Vector2(1, -1));
 
             _speed = _initialSpeed;
+        }
+
+        public void Disable()
+        {
+            _state = BallState.Disabled;
         }
     }
 }

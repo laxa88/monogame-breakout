@@ -26,6 +26,7 @@ namespace Breakout
         private Paddle _paddle;
         private Ball _ball;
         private Score _score;
+        private Lives _lives;
 
         public BreakoutGame()
         {
@@ -64,6 +65,9 @@ namespace Breakout
 
             _score = new Score(this, _spriteBatch);
             _score.Initialize();
+
+            _lives = new Lives(this, _spriteBatch);
+            _lives.Initialize();
 
             _stage = new Stage(this, _spriteBatch, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
             _stage.Initialize();
@@ -187,6 +191,7 @@ namespace Breakout
             );
             _ball.Draw(gameTime);
             _score.Draw(gameTime);
+            _lives.Draw(gameTime);
             _spriteBatch.End();
 
             // Target main window, reset background colour
@@ -204,10 +209,16 @@ namespace Breakout
 
         protected void OnPlayerLoseBall(object sender, EventArgs e)
         {
-            // TODO
-            // - check remaining balls
-            // - if zero, lose a life
-            _ball.Reset();
+            bool gameOver = _lives.LoseLife();
+
+            if (!gameOver)
+            {
+                _ball.Reset();
+            }
+            else
+            {
+                _ball.Disable();
+            }
         }
     }
 }

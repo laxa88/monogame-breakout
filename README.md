@@ -21,7 +21,7 @@ Previous projects:
   - [x] Stick to paddle before launch
   - [x] movement
   - [x] bounce off paddle, walls and blocks
-  - [ ] lose a life when all balls exits bottom of screen
+  - [x] lose a life when all balls exits bottom of screen
 
 - Paddle
   - [x] left/right movement
@@ -37,7 +37,7 @@ Previous projects:
   - [ ] main menu (play, reset hi-score)
   - [ ] pause menu (resume game, quit)
   - [x] score, hi-score
-  - [ ] life
+  - [x] life
   - [ ] current stage
   - [ ] save hi-score and reload on game startup
   - [ ] reset hi-score
