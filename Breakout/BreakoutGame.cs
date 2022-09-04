@@ -41,14 +41,14 @@ namespace Breakout
             base.Initialize();
 
             // Note: Doesn't work if you set in constructor
-            Window.Title = "My Pong Game";
+            Window.Title = "My Breakout Game";
 
             Sound.Initialize(this);
             // Sound.LoadSoundEffect(Constants.SFX_ROUND_END);
 
             Music.Initialize(this);
-            // Music.LoadMusic(Constants.BGM);
-            // Music.PlayMusic(Constants.BGM, true);
+            Music.LoadMusic(Constants.BGM);
+            Music.PlayMusic(Constants.BGM, true);
 
             _graphics.PreferredBackBufferWidth = Constants.WINDOW_WIDTH;
             _graphics.PreferredBackBufferHeight = Constants.WINDOW_HEIGHT;
