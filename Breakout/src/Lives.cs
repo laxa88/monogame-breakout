@@ -1,3 +1,4 @@
+using System;
 using Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,16 +9,15 @@ namespace Breakout
     {
         private SpriteFont _font;
         private int _lives;
+        public event EventHandler onGameOver;
 
         public Lives(Game game, SpriteBatch spriteBatch) : base(game, spriteBatch) { }
 
         override public void Initialize()
         {
             base.Initialize();
-
-            _lives = 0;
-
             LoadContent();
+            Reset();
         }
 
         override protected void LoadContent()
@@ -39,19 +39,19 @@ namespace Breakout
             );
         }
 
-        public void SetLives(int lives)
+        public void Reset()
         {
-            _lives = lives;
+            _lives = 2;
         }
 
-        /// <summary>
-        /// Deducts a life. Returns a boolean whether the game is over.
-        /// </summary>
-        public bool LoseLife()
+        public void LoseLife()
         {
             _lives -= 1;
 
-            return _lives < 0;
+            if (_lives < 0)
+            {
+                onGameOver(this, EventArgs.Empty);
+            }
         }
     }
 }

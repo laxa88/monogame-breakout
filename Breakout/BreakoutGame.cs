@@ -10,6 +10,13 @@ using Newtonsoft.Json;
 
 namespace Breakout
 {
+    enum GameState
+    {
+        Init,
+        Active,
+        GameOver
+    }
+
     public class BreakoutGame : Game
     {
         // Engine
@@ -21,8 +28,12 @@ namespace Breakout
 
         // Game
 
+        private GameState _gameState = GameState.Init;
+        private float _gameOverElapsed = 0f;
+        private float _gameOverCooldown = 3000f;
+
         private Stage _stage;
-        private List<Block> _blocks;
+        private List<Block> _blocks = new List<Block>();
         private Paddle _paddle;
         private Ball _ball;
         private Score _score;
@@ -68,6 +79,7 @@ namespace Breakout
 
             _lives = new Lives(this, _spriteBatch);
             _lives.Initialize();
+            _lives.onGameOver += OnPlayerGameOver;
 
             _stage = new Stage(this, _spriteBatch, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
             _stage.Initialize();
@@ -81,24 +93,7 @@ namespace Breakout
                 Constants.PADDLE_HEIGHT
             );
 
-            _blocks = new List<Block>();
-            using (StreamReader r = new StreamReader("Breakout/Content/stage_01.json"))
-            {
-                string json = r.ReadToEnd();
-                JsonConvert
-                    .DeserializeObject<List<int>>(json)
-                    .Select((x, i) => new { item = x, index = i })
-                    .ToList()
-                    .ForEach(obj =>
-                    {
-                        if (obj.item != 0)
-                        {
-                            Block block = new Block(this, _spriteBatch, obj.item, obj.index);
-                            block.Initialize();
-                            _blocks.Add(block);
-                        }
-                    });
-            }
+            InitializeBlocks();
 
             _ball = new Ball(this, _spriteBatch);
             _ball.Initialize(
@@ -116,16 +111,40 @@ namespace Breakout
             Window.ClientSizeChanged += OnWindowSizeChange;
             OnWindowSizeChange(null, null);
 
-            // TODO: start game
+            _gameState = GameState.Active;
+        }
+
+        private void InitializeBlocks()
+        {
+            _blocks.Clear();
+
+            using (StreamReader r = new StreamReader("Breakout/Content/stage_01.json"))
+            {
+                string json = r.ReadToEnd();
+                JsonConvert
+                    .DeserializeObject<List<int>>(json)
+                    .Select((x, i) => new { item = x, index = i })
+                    .ToList()
+                    .ForEach(obj =>
+                    {
+                        if (obj.item != 0)
+                        {
+                            Block block = new Block(this, _spriteBatch, obj.item, obj.index);
+                            block.Initialize();
+                            _blocks.Add(block);
+                        }
+                    });
+            }
         }
 
         private void InitializeStage()
         {
-            // TODO
-            // initialize stage
-            // initialize blocks
-            // initialize paddle
-            // initialize ball
+            InitializeBlocks();
+            _lives.Reset();
+            _score.ResetScore();
+            _paddle.Reset();
+            _ball.Reset();
+            _gameState = GameState.Active;
         }
 
         private void OnWindowSizeChange(object sender, EventArgs e)
@@ -164,11 +183,27 @@ namespace Breakout
             )
                 Exit();
 
-            _paddle.Update(gameTime, kstate);
-            _ball.Update(gameTime, kstate);
+            switch (_gameState)
+            {
+                case GameState.Active:
+                    _paddle.Update(gameTime, kstate);
+                    _ball.Update(gameTime, kstate);
+                    break;
 
-            // TODO check win condition (when blocks list is empty)
-            // TODO check lose condition (when lives is zero)
+                case GameState.GameOver:
+                    if (_gameOverElapsed < _gameOverCooldown)
+                    {
+                        _gameOverElapsed += gameTime.ElapsedGameTime.Milliseconds;
+                    }
+                    else
+                    {
+                        InitializeStage();
+                    }
+                    break;
+
+                default:
+                    break;
+            }
 
             base.Update(gameTime);
         }
@@ -209,16 +244,16 @@ namespace Breakout
 
         protected void OnPlayerLoseBall(object sender, EventArgs e)
         {
-            bool gameOver = _lives.LoseLife();
+            _lives.LoseLife();
+            _ball.Reset();
+        }
 
-            if (!gameOver)
-            {
-                _ball.Reset();
-            }
-            else
-            {
-                _ball.Disable();
-            }
+        protected void OnPlayerGameOver(object sender, EventArgs e)
+        {
+            _ball.Disable();
+
+            _gameState = GameState.GameOver;
+            _gameOverElapsed = 0f;
         }
     }
 }
